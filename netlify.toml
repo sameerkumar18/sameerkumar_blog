@@ -3,7 +3,7 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22"
 
 [template.environment]
   MEDIUM_FEED = "The URL of the Medium feed to pull in"

@@ -33,7 +33,7 @@ The whole thing should take less than a minute!
 
 This site is built with [Eleventy](https://11ty.io) and has very few prerequisites:
 
-- Node 20+ (use [nvm](https://github.com/nvm-sh/nvm) and run `nvm use` to switch to the pinned version)
+- Node 22+ (use [nvm](https://github.com/nvm-sh/nvm) and run `nvm use` to switch to the pinned version)
 - Yarn
 
 ### Install and bootstrap

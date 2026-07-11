@@ -8,7 +8,7 @@
     "url": "https://github.com/philhawksworth/medium-export"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22.11"
   },
   "scripts": {
     "start": "gulp watch & eleventy --serve",
