@@ -53,3 +53,8 @@ yarn start
 yarn run build
 
 ```
+
+## Build output enhancements
+
+- Generates `dist/robots.txt`, `dist/sitemap.xml`, `dist/llms.txt`, and `dist/feed.xml` for crawler/agent discovery.
+- Publishes only site-local article links and metadata in generated output (no Medium attribution in rendered pages).

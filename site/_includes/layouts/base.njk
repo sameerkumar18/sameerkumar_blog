@@ -1,10 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {% set pageTitle = title or site.name %}
+    {% set pageDescription = description or site.description %}
+    {% set resolvedCanonicalPath = (canonicalPath or page.url or "/").split("?")[0].split("#")[0] %}
+    {% set canonicalUrl = site.url ~ resolvedCanonicalPath %}
+    {% set socialType = ogType or "website" %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ title }}</title>
+    <title>{{ pageTitle }}</title>
+    <meta name="description" content="{{ pageDescription }}">
+    <link rel="canonical" href="{{ canonicalUrl }}">
+    <meta property="og:title" content="{{ pageTitle }}">
+    <meta property="og:description" content="{{ pageDescription }}">
+    <meta property="og:type" content="{{ socialType }}">
+    <meta property="og:url" content="{{ canonicalUrl }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ pageTitle }}">
+    <meta name="twitter:description" content="{{ pageDescription }}">
+    <link rel="alternate" type="application/rss+xml" title="{{ site.name }} RSS Feed" href="{{ site.url }}/feed.xml">
     <style>{% include "css/styles.css" %}</style>
   </head>
   <body>

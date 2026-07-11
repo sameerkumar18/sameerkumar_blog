@@ -1,6 +1,9 @@
 ---
 layout: layouts/base.njk
-title: Sameer Kumar | Articles (Sourced from Medium)
+title: Sameer Kumar | Articles
+description: Articles by Sameer Kumar on software engineering and backend development.
+canonicalPath: /
+ogType: website
 ---
 
 <h1>Welcome to Sameer Kumar's Articles</h1>
@@ -14,12 +17,31 @@ title: Sameer Kumar | Articles (Sourced from Medium)
 
 <hr/>
 
-<h2>Articles <small>(sourced from {{ medium.url }})</small></h2>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "{{ site.name }}",
+      "url": "{{ site.url }}"
+    },
+    {
+      "@type": "Blog",
+      "name": "{{ site.name }}",
+      "description": "{{ description }}",
+      "url": "{{ site.url }}"
+    }
+  ]
+}
+</script>
+
+<h2>Articles</h2>
 <ul class="listing">
 {% for item in medium.posts %}
   <li>
-    <p class="meta">Published on {{ item.pubDate | date }} by {{ item['dc:creator'] }}</p>
-    <h3><a href="/posts/{{ item.path }}">{{ item.title }}</a></h3>
+    <p class="meta">Published on {{ item.pubDate[0] | date }} by {{ item['dc:creator'][0] }}</p>
+    <h3><a href="/posts/{{ item.path }}/">{{ item.title[0] }}</a></h3>
   </li>
  {% endfor %}
 </ul>

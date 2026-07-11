@@ -1,0 +1,12 @@
+---
+permalink: llms.txt
+eleventyExcludeFromCollections: true
+---
+# {{ site.name }}
+
+{{ site.description }}
+
+## Posts
+{% for item in medium.posts %}
+- {{ item.pubDate[0] | date }} — [{{ item.title[0] }}]({{ site.url }}/posts/{{ item.path }}/)
+{% endfor %}
