@@ -3,7 +3,7 @@ permalink: feed.xml
 eleventyExcludeFromCollections: true
 ---
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>{{ site.name }}</title>
     <description>{{ site.description }}</description>
@@ -15,8 +15,8 @@ eleventyExcludeFromCollections: true
       <link>{{ site.url }}/posts/{{ item.path }}/</link>
       <guid isPermaLink="true">{{ site.url }}/posts/{{ item.path }}/</guid>
       <pubDate>{{ item.pubDate[0] | rfc822Date }}</pubDate>
-      <author>{{ item['dc:creator'][0] | escape }}</author>
-      <description><![CDATA[{{ item.title[0] }}]]></description>
+      <dc:creator>{{ item['dc:creator'][0] | escape }}</dc:creator>
+      <description><![CDATA[{{ item['content:encoded'][0] | safe }}]]></description>
       <content:encoded><![CDATA[{{ item['content:encoded'][0] | safe }}]]></content:encoded>
     </item>
     {% endfor %}

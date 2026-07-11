@@ -1,11 +1,16 @@
-const fallbackSiteUrl = "https://example.com";
+const fallbackSiteUrl = "https://sameerkumar.blog";
 
 const normalizeUrl = (value) => {
-  if (!value) {
+  if (!value || !value.trim()) {
     return fallbackSiteUrl;
   }
 
-  return value.trim().replace(/\/+$/, "");
+  try {
+    const parsed = new URL(value.trim());
+    return parsed.origin;
+  } catch {
+    return fallbackSiteUrl;
+  }
 };
 
 module.exports = {

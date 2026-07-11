@@ -3,8 +3,8 @@
   <head>
     {% set pageTitle = title or site.name %}
     {% set pageDescription = description or site.description %}
-    {% set canonicalPath = canonicalPath or page.url or "/" %}
-    {% set canonicalUrl = site.url ~ canonicalPath %}
+    {% set resolvedCanonicalPath = (canonicalPath or page.url or "/").split("?")[0].split("#")[0] %}
+    {% set canonicalUrl = site.url ~ resolvedCanonicalPath %}
     {% set socialType = ogType or "website" %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
