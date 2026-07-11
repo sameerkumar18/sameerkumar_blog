@@ -1,24 +1,17 @@
-var axios  = require('axios');
-var toJSON = require('xml2js').parseString;
+const { parseStringPromise } = require('xml2js');
 
-var url = process.env.MEDIUM_FEED ||'https://medium.com/feed/netlify';
+const url = process.env.MEDIUM_FEED || 'https://medium.com/feed/netlify';
 
-module.exports = () => {
-  return new Promise((resolve, reject) => {
-    axios.get(url)
-      .then((response) => {
-        // turn the feed XML into JSON
-        toJSON(response.data, function (err, result) {
-          // create a path for each item based on Medium's guid URL
-          result.rss.channel[0].item.forEach(element => {
-            var url = element.link[0].split('/');
-            element.path = url[url.length-1].split('?')[0];
-          });
-          resolve({'url': url, 'posts': result.rss.channel[0].item});
-        });
-      })
-      .catch((error) => {
-        reject(error);
-      });
+module.exports = async () => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch feed: ${response.status} ${response.statusText}`);
+  }
+  const xml = await response.text();
+  const result = await parseStringPromise(xml);
+  result.rss.channel[0].item.forEach(element => {
+    const link = element.link[0].split('/');
+    element.path = link[link.length - 1].split('?')[0];
   });
+  return { url, posts: result.rss.channel[0].item };
 };
