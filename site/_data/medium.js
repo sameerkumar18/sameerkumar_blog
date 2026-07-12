@@ -76,11 +76,11 @@ module.exports = async () => {
     const reason = error?.name === 'AbortError' ? 'timed out' : (error?.message || 'unknown error');
 
     if (fallbackPosts.length > 0) {
-      console.warn(`[medium] Feed fetch ${reason}; serving ${fallbackPosts.length} cached posts.`);
+      console.warn(`[medium] Feed fetch failed (${reason}); serving ${fallbackPosts.length} cached posts.`);
       return { url, posts: fallbackPosts };
     }
 
-    console.warn('[medium] Feed unavailable and no cache found; continuing build with zero posts.');
+    console.warn(`[medium] Feed unavailable (${reason}) and no cache found; continuing build with zero posts.`);
     return { url, posts: [] };
   } finally {
     clearTimeout(timeout);

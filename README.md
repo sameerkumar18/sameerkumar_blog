@@ -34,7 +34,7 @@ The whole thing should take less than a minute!
 
 ## Local development
 
-This site is built with [Eleventy](https://11ty.io) and have very few prerequisites:
+This site is built with [Eleventy](https://11ty.io) and has very few prerequisites:
 
 - Node
 - Npm or Yarn
