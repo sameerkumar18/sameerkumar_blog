@@ -5,11 +5,31 @@ pagination:
   size: 1
   alias: item
 permalink: posts/{{ item.path }}/index.html
+eleventyComputed:
+  title: "{{ item.title[0] }} | Sameer Kumar"
+  description: "{{ ((item.description and item.description[0]) or (item['content:encoded'] and item['content:encoded'][0]) or item.title[0]) | seoDescription }}"
+  canonicalPath: "/posts/{{ item.path }}/"
+  ogType: article
 ---
 
-<p class="meta">Published on {{ item.pubDate | date }} <br/>by {{ item['dc:creator'] }}</p>
-<h2>{{ item.title }}</h2>
-<div class="post-content">
-  {{ item['content:encoded'] | safe }}
-</div>
-
+<article>
+  <p class="meta">Published on {{ item.pubDate[0] | date }} <br/>by {{ item['dc:creator'][0] }} · {{ item['content:encoded'][0] | readingTime }}</p>
+  <h2>{{ item.title[0] }}</h2>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ item.title[0] | json | safe }},
+    "author": {
+      "@type": "Person",
+      "name": {{ item['dc:creator'][0] | json | safe }}
+    },
+    "datePublished": "{{ item.pubDate[0] | isoDate }}",
+    "url": "{{ site.url }}/posts/{{ item.path }}/",
+    "mainEntityOfPage": "{{ site.url }}/posts/{{ item.path }}/"
+  }
+  </script>
+  <div class="post-content">
+    {{ item['content:encoded'][0] | hardenPostImages | safe }}
+  </div>
+</article>

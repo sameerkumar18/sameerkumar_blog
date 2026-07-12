@@ -1,25 +1,53 @@
 ---
 layout: layouts/base.njk
-title: Sameer Kumar | Articles (Sourced from Medium)
+title: Sameer Kumar | Articles
+description: Programmer, product builder, and founder. Articles by Sameer Kumar.
+canonicalPath: /
+ogType: website
 ---
 
 <h1>Welcome to Sameer Kumar's Articles</h1>
 <p>
-  Software Engineer, Backend Developer. I've been working majorly in Python, Django since the past 2 years. Building products at companies such as SupplyAI, Sqrrl Fintech and Dhuper Infotech. Skilled in Python (Django, Flask, Falcon), Cloud Infrastructure (AWS, Azure), Databases (SQL, NoSQL), popular tools used in backend (Git, Algolia, Docker) and modern development practices for maintainable and scalable code. Graduated from Vivekananda Institute of Professional Studies(GGSIP University) in 2019.
-  
-  
-  
-  Based in New Delhi, India.<br>Mostly active on <a href="https://twitter.com/sameer_kumar018">Twitter</a>. <br>Know more <a href="https://www.sameerkumar.website">here</a>.
+  Sameer Kumar is a programmer, product builder, and founder. In 2020 he started <a href="https://shipblink.com">ShipBlink</a>, a shipping platform for e-commerce merchants, which he built and ran alone until it was acquired by <a href="https://www.easypost.com">EasyPost</a> in 2024, where he now leads product for the small and medium business shipping line. He also runs <a href="https://casparser.in">CASParser</a>, which parses and consolidates Indian investment records, used by wealthtech platforms including Scripbox, Dezerv, and 360One.
+</p>
+<p>
+  Sameer lives in New Delhi and studied computer applications at Guru Gobind Singh Indraprastha University. He has traveled to over 35 countries, most recently spending six months backpacking through South America.
+</p>
+<p>
+  Mostly active on <a href="https://twitter.com/sameer_kumar018">Twitter</a>. <br>Know more <a href="https://www.sameerkumar.website">here</a>.
 </p>
 
 <hr/>
 
-<h2>Articles <small>(sourced from {{ medium.url }})</small></h2>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "{{ site.name }}",
+      "url": "{{ site.url }}"
+    },
+    {
+      "@type": "Blog",
+      "name": "{{ site.name }}",
+      "description": "{{ description }}",
+      "url": "{{ site.url }}"
+    }
+  ]
+}
+</script>
+
+<h2>Articles</h2>
 <ul class="listing">
 {% for item in medium.posts %}
   <li>
-    <p class="meta">Published on {{ item.pubDate | date }} by {{ item['dc:creator'] }}</p>
-    <h3><a href="/posts/{{ item.path }}">{{ item.title }}</a></h3>
+    <p class="meta">Published on {{ item.pubDate[0] | date }} by {{ item['dc:creator'][0] }} · {{ item['content:encoded'][0] | readingTime }}</p>
+    <h3><a href="/posts/{{ item.path }}/">{{ item.title[0] }}</a></h3>
+  </li>
+{% else %}
+  <li>
+    <p class="meta">Posts are temporarily unavailable. Please check back soon.</p>
   </li>
  {% endfor %}
 </ul>

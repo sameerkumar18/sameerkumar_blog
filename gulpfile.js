@@ -1,6 +1,7 @@
 const gulp      = require("gulp");
 const postcss   = require("gulp-postcss");
-const precss    = require('precss');
+const simplevars = require('postcss-simple-vars');
+const nested    = require('postcss-nested');
 const cssnano   = require('cssnano');
 
 
@@ -10,7 +11,7 @@ const cssnano   = require('cssnano');
 */
 gulp.task('css', function () {
   return gulp.src('css/**/*.css')
-    .pipe(postcss([precss, cssnano] ))
+    .pipe(postcss([simplevars(), nested(), cssnano()] ))
     .pipe(gulp.dest('site/_includes/css'));
 });
 

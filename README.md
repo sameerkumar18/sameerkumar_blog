@@ -1,16 +1,20 @@
-
 <h1>Medium Export<a href='https://app.netlify.com/sites/rss-jamstack/deploys'><img align="right" src='https://api.netlify.com/api/v1/badges/8ecd045e-8f66-4d4e-9656-85c1f11d3736/deploy-status'/></a></h1>
 
-An example of how easy it can be to generate a site based on an RSS feed. In this instance focussed on Medium's RSS Feeds
+An example of how easy it can be to generate a site based on an RSS feed.
 
+## Recent hardening updates
 
+- Feed fetching now uses timeout + on-disk cache fallback, so builds continue even when the upstream feed is unavailable.
+- Post pages now emit per-post SEO metadata (title, canonical URL, description).
+- A friendly 404 page is generated at `dist/404.html`.
+- Reading time and improved date formatting are shown on listing/post pages.
+- Netlify security/caching headers are configured in `netlify.toml`.
 
 ## Quick start
 
-You can get your own version of this site by just clicking the button below, and then providing a suitable Medium RSS feed URL.
+You can get your own version of this site by just clicking the button below, and then providing a suitable RSS feed URL.
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/philhawksworth/medium-export)
-
 
 ### What will clicking that button do?
 
@@ -20,7 +24,7 @@ Then it will build and deploy a new site for you, complete with hosting and cont
 
 The whole thing should take less than a minute!
 
-### Medium RSS Linkspiration:
+### RSS Linkspiration
 
 - https://medium.com/feed/netlify
 - https://medium.com/feed/memory-leak
@@ -28,10 +32,9 @@ The whole thing should take less than a minute!
 - https://medium.com/feed/@addyosmani
 - https://m.signalvnoise.com/feed
 
-
 ## Local development
 
-This site is built with [Eleventy](https://11ty.io) and have very few prerequisites:
+This site is built with [Eleventy](https://11ty.io) and has very few prerequisites:
 
 - Node
 - Npm or Yarn
