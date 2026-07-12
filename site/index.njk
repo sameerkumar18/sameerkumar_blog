@@ -42,8 +42,12 @@ ogType: website
 <ul class="listing">
 {% for item in medium.posts %}
   <li>
-    <p class="meta">Published on {{ item.pubDate[0] | date }} by {{ item['dc:creator'][0] }}</p>
+    <p class="meta">Published on {{ item.pubDate[0] | date }} by {{ item['dc:creator'][0] }} · {{ item['content:encoded'][0] | readingTime }}</p>
     <h3><a href="/posts/{{ item.path }}/">{{ item.title[0] }}</a></h3>
+  </li>
+{% else %}
+  <li>
+    <p class="meta">Posts are temporarily unavailable. Please check back soon.</p>
   </li>
  {% endfor %}
 </ul>

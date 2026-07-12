@@ -7,13 +7,13 @@ pagination:
 permalink: posts/{{ item.path }}/index.html
 eleventyComputed:
   title: "{{ item.title[0] }} | Sameer Kumar"
-  description: "Article by {{ item['dc:creator'][0] }}."
+  description: "{{ ((item.description and item.description[0]) or (item['content:encoded'] and item['content:encoded'][0]) or item.title[0]) | seoDescription }}"
   canonicalPath: "/posts/{{ item.path }}/"
   ogType: article
 ---
 
 <article>
-  <p class="meta">Published on {{ item.pubDate[0] | date }} <br/>by {{ item['dc:creator'][0] }}</p>
+  <p class="meta">Published on {{ item.pubDate[0] | date }} <br/>by {{ item['dc:creator'][0] }} · {{ item['content:encoded'][0] | readingTime }}</p>
   <h2>{{ item.title[0] }}</h2>
   <script type="application/ld+json">
   {
@@ -30,6 +30,6 @@ eleventyComputed:
   }
   </script>
   <div class="post-content">
-    {{ item['content:encoded'][0] | safe }}
+    {{ item['content:encoded'][0] | hardenPostImages | safe }}
   </div>
 </article>
