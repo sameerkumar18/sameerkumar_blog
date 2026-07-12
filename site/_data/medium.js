@@ -4,7 +4,7 @@ const { parseStringPromise } = require('xml2js');
 const EleventyFetch = require('@11ty/eleventy-fetch');
 
 const url = process.env.MEDIUM_FEED || 'https://medium.com/feed/netlify';
-const timeoutMs = 10_000;
+const timeoutMs = Number.parseInt(process.env.FEED_TIMEOUT_MS || '10000', 10);
 const cacheDir = '.cache/medium-feed';
 const fallbackPath = path.join(cacheDir, 'last-success.json');
 
@@ -54,17 +54,26 @@ async function writeFallbackPosts(posts) {
 
 module.exports = async () => {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+  const timeout = Number.isFinite(timeoutMs) && timeoutMs > 0 ? timeoutMs : 10_000;
+  let timeoutHandle;
 
   try {
-    const xml = await EleventyFetch(url, {
-      duration: '12h',
-      type: 'text',
-      directory: cacheDir,
-      fetchOptions: {
-        signal: controller.signal
-      }
-    });
+    const xml = await Promise.race([
+      EleventyFetch(url, {
+        duration: '12h',
+        type: 'text',
+        directory: cacheDir,
+        fetchOptions: {
+          signal: controller.signal
+        }
+      }),
+      new Promise((_, reject) => {
+        timeoutHandle = setTimeout(() => {
+          controller.abort();
+          reject(new Error(`Feed request timed out after ${timeout}ms`));
+        }, timeout);
+      })
+    ]);
 
     const result = await parseStringPromise(xml);
     const posts = normalizePosts(result);
@@ -73,7 +82,7 @@ module.exports = async () => {
     return { url, posts };
   } catch (error) {
     const fallbackPosts = await readFallbackPosts();
-    const reason = error?.name === 'AbortError' ? 'timed out' : (error?.message || 'unknown error');
+    const reason = `${error?.name || 'Error'}: ${error?.message || 'No message provided'}`;
 
     if (fallbackPosts.length > 0) {
       console.warn(`[medium] Feed fetch failed (${reason}); serving ${fallbackPosts.length} cached posts.`);
@@ -83,6 +92,6 @@ module.exports = async () => {
     console.warn(`[medium] Feed unavailable (${reason}) and no cache found; continuing build with zero posts.`);
     return { url, posts: [] };
   } finally {
-    clearTimeout(timeout);
+    clearTimeout(timeoutHandle);
   }
 };

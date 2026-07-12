@@ -1,7 +1,7 @@
 function htmlToText(value) {
   return String(value || '')
     .replace(/<style[\s\S]*?<\/style\s*>/gi, ' ')
-    .replace(/<script[\s\S]*?<\/script\s*>/gi, ' ')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script\b[^>]*>/gi, ' ')
     .replace(/<[^>]+>/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
